@@ -1,0 +1,46 @@
+// Creates one fresh synthetic event on the existing LOCAL chain, preserving prior policies.
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import {createPublicClient,createWalletClient,http} from 'viem';
+import {anvil} from 'viem/chains';
+import {mnemonicToAccount} from 'viem/accounts';
+import {prepareEvent} from './event-bundle.mjs';
+import {canonical,hashJSON} from '../evidence/src/core.mjs';
+import {localStorage} from '../evidence/scripts/local-storage.mjs';
+import {EvidenceStore} from '../evidence/src/storage.mjs';
+const path=new URL('../deployments/local.json',import.meta.url);
+const d=JSON.parse(await fs.readFile(path,'utf8'));
+assert.equal(d.chainId,31337);assert.equal(new URL(d.rpcUrl).hostname,'127.0.0.1');
+const client=createPublicClient({chain:anvil,transport:http(d.rpcUrl)});assert.equal(await client.getChainId(),31337);
+const account=mnemonicToAccount('test test test test test test test test test test test junk',{addressIndex:0});
+assert.equal(account.address.toLowerCase(),d.wallets.A.toLowerCase());
+const wallet=createWalletClient({account,chain:anvil,transport:http(d.rpcUrl)});
+const artifacts=JSON.parse(await fs.readFile(new URL('../.local/artifacts.json',import.meta.url),'utf8'));
+const manager=d.contracts.manager,abi=artifacts.AegisPolicyManager.abi;
+const id=await client.readContract({address:manager,abi,functionName:'eventCount'})+1n;
+const now=(await client.getBlock()).timestamp;
+const vault=await client.readContract({address:manager,abi,functionName:'vaults',args:[2n]});
+assert.equal(await client.readContract({address:vault,abi:artifacts.AegisUnderwritingVault.abi,functionName:'phase'}),1);
+assert.ok(await client.readContract({address:vault,abi:artifacts.AegisUnderwritingVault.abi,functionName:'availableCapacity'})>=200_000_000n);
+const prepared=prepareEvent(d,id,Number(now),'synthetic','NO');
+async function write(functionName,args){const params={address:manager,abi,functionName,args,account};const simulated=await client.simulateContract(params);const estimate=await client.estimateContractGas(params);const hash=await wallet.writeContract({...simulated.request,gas:estimate+estimate/10n});assert.equal((await client.waitForTransactionReceipt({hash})).status,'success');return hash;}
+await write('registerEvent',[prepared.terms]);
+const local=await localStorage(new URL('../.local/evidence/',import.meta.url).pathname.replace(/^\/([A-Z]:)/,'$1'));
+const store=new EvidenceStore(local.bucket,local.db);
+await store.put(hashJSON(prepared.spec),canonical(prepared.spec));await store.put(prepared.bundle.responseHash,prepared.bundle.raw,'application/octet-stream');await store.put(prepared.bundle.manifestHash,canonical(prepared.bundle.manifest));local.close();
+await fs.writeFile(new URL(`../.local/events/local-${id}-NO.json`,import.meta.url),JSON.stringify(prepared,null,2));
+await write('publishQuote',[id,2n,200_000_000n,25_000_000n,now+43200n]);
+d.events.push({id:id.toString(),mode:'synthetic',outcome:'NO',specification:prepared.spec});
+const underwritingId=id+1n;
+const underwriting=prepareEvent(d,underwritingId,Number(now),'synthetic','NO');
+await write('registerEvent',[underwriting.terms]);
+const extraLocal=await localStorage(new URL('../.local/evidence/',import.meta.url).pathname.replace(/^\/([A-Z]:)/,'$1'));
+const extraStore=new EvidenceStore(extraLocal.bucket,extraLocal.db);
+await extraStore.put(hashJSON(underwriting.spec),canonical(underwriting.spec));await extraStore.put(underwriting.bundle.responseHash,underwriting.bundle.raw,'application/octet-stream');await extraStore.put(underwriting.bundle.manifestHash,canonical(underwriting.bundle.manifest));extraLocal.close();
+await fs.writeFile(new URL(`../.local/events/local-${underwritingId}-NO.json`,import.meta.url),JSON.stringify(underwriting,null,2));
+d.events.push({id:underwritingId.toString(),mode:'synthetic',outcome:'NO',purpose:'underwriting-qa',specification:underwriting.spec});
+await fs.mkdir(new URL('../.local/history/',import.meta.url),{recursive:true});
+await fs.writeFile(new URL(`../.local/history/${Date.now()}-before-browser-qa.json`,import.meta.url),await fs.readFile(path));
+await fs.writeFile(path,JSON.stringify(d,null,2));
+console.log(`LOCAL ONLY: synthetic event #${id} and funded quote prepared for browser QA.`);
+

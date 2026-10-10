@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-10-10T10:54:36.770Z",
+  "vaults": [
+    {
+      "id": "1",
+      "phase": 1,
+      "assets": "1000000000",
+      "reserved": "0",
+      "activePolicies": "0",
+      "shares": "1000000000"
+    },
+    {
+      "id": "2",
+      "phase": 0,
+      "assets": "0",
+      "reserved": "0",
+      "activePolicies": "0",
+      "shares": "0"
+    }
+  ],
+  "events": [],
+  "quotes": [],
+  "policies": [],
+  "escrow": "0"
+}

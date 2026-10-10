@@ -1,0 +1,9 @@
+{
+  "chainId":10143,"purpose":"Test MON funding only; application contracts are not yet deployed",
+  "amountPerWalletWei":"1000000000000000000",
+  "verifiedReceipts":[
+    {"wallet":"A","to":"0xd4febe16aefc4498828bf439fd4c6eb569a37666","hash":"0xeeecff6f9efc7de1fae0cfabe9db4a03e7d3bf05f1f357954da6353208fa5873","status":"0x1","block":"0x4286e3c"},
+    {"wallet":"B","to":"0x48915030f02e64a698c2a72580de42afc5856865","hash":"0x42884c76d9b92ec5225b75e4e4f7a8f25226a1d4a6f13e6a815b9f1d69c5409d","status":"0x1","block":"0x4287146"},
+    {"wallet":"C","to":"0xda62770d6caa9a455537e00989166c52264a1349","hash":"0x221f6bf5bca2878b69ad78eefa1e841f0d654ac584fe547007798fca7cc42693","status":"0x1","block":"0x4287148"}
+  ]
+}

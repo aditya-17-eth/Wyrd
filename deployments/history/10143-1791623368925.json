@@ -1,0 +1,71 @@
+{
+  "chainId": 10143,
+  "network": "Monad Testnet",
+  "status": "deployed-verification-pending",
+  "rpcUrl": "https://testnet-rpc.monad.xyz",
+  "explorer": "https://testnet.monadscan.com",
+  "wallets": {
+    "A": "0xd4fEbE16AefC4498828bF439FD4C6Eb569A37666",
+    "B": "0x48915030F02e64a698c2a72580DE42AFc5856865",
+    "C": "0xDa62770d6caA9A455537E00989166c52264a1349"
+  },
+  "evidenceOrigin": "https://aegis-evidence.sweetmoss1.chatgpt.site",
+  "contracts": {
+    "token": "0xc574794b36fedf6dd2f0e621cc2240d96664a1e6",
+    "manager": "0xf72da3dbf0c764e5d962847efce7223877259226",
+    "resolver": "0x16e8e989931be076c11d821908dc6737c237f4db"
+  },
+  "deploymentBlock": "69785714",
+  "events": [],
+  "transactions": [
+    {
+      "label": "MockUSDC",
+      "hash": "0xb0ef6b4b1d822ccbaaf7393781047b66cc65593154590c674eac37e71aabb8df",
+      "block": "69785714",
+      "gasUsed": "568310",
+      "gasLimit": "568310",
+      "effectiveGasPrice": "103000000001",
+      "chargedFeeWei": "58535930000568310",
+      "blockTimestamp": "1791623361",
+      "receiptObservedAt": "2026-10-10T09:09:28.486Z",
+      "confirmationTiming": "Historic receipt; exact submission-to-confirmation duration was not instrumented"
+    },
+    {
+      "label": "AegisPolicyManager",
+      "hash": "0xf3878efe97c0ed96dec96d120a091ad8f9e65f249fa428ec2015d8fb4857fae7",
+      "block": "69785718",
+      "gasUsed": "4720360",
+      "gasLimit": "4720360",
+      "effectiveGasPrice": "103000000001",
+      "chargedFeeWei": "486197080004720360",
+      "blockTimestamp": "1791623362",
+      "receiptObservedAt": "2026-10-10T09:09:28.509Z",
+      "confirmationTiming": "Historic receipt; exact submission-to-confirmation duration was not instrumented"
+    },
+    {
+      "label": "DemoWeatherResolver",
+      "hash": "0x55eb840f01d68a18fd4e4ded2b1cc4cbf5f445928fc685021f74bf5ca67d6ea7",
+      "block": "69785721",
+      "gasUsed": "1393042",
+      "gasLimit": "1393042",
+      "effectiveGasPrice": "103000000001",
+      "chargedFeeWei": "143483326001393042",
+      "blockTimestamp": "1791623363",
+      "receiptObservedAt": "2026-10-10T09:09:28.506Z",
+      "confirmationTiming": "Historic receipt; exact submission-to-confirmation duration was not instrumented"
+    },
+    {
+      "label": "initializeAdapter(address)",
+      "hash": "0x3d97bd5d252d3995e78bd32cf6a3ef95277d9849af4303268adca21fae57c6c4",
+      "block": "69785724",
+      "gasUsed": "69174",
+      "gasLimit": "69174",
+      "effectiveGasPrice": "103000000001",
+      "chargedFeeWei": "7124922000069174",
+      "blockTimestamp": "1791623364",
+      "receiptObservedAt": "2026-10-10T09:09:28.924Z",
+      "confirmationTiming": "Historic receipt; exact submission-to-confirmation duration was not instrumented"
+    }
+  ],
+  "totalDeploymentFeeWei": "695341258006750886"
+}

@@ -1,0 +1,4 @@
+'use client';
+import {WagmiProvider,createConfig} from 'wagmi';import {monadTestnet,anvil} from 'wagmi/chains';import {injected} from 'wagmi/connectors';import {QueryClient,QueryClientProvider} from '@tanstack/react-query';import {useState} from 'react';import {pacedHttp} from '@/lib/rpc';
+export const walletConfig=createConfig({chains:[monadTestnet,anvil],connectors:[injected()],transports:{[monadTestnet.id]:pacedHttp(process.env.NEXT_PUBLIC_RPC_URL||'https://testnet-rpc.monad.xyz'),[anvil.id]:pacedHttp('http://127.0.0.1:8545',{local:true})},ssr:true});
+export function Providers({children}:{children:React.ReactNode}){const [queryClient]=useState(()=>new QueryClient({defaultOptions:{queries:{retry:1,refetchOnWindowFocus:false}}}));return <WagmiProvider config={walletConfig}><QueryClientProvider client={queryClient}>{children}</QueryClientProvider></WagmiProvider>;}

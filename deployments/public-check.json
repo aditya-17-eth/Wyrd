@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-10T10:28:09.204Z",
+  "publicFrontend": "https://aegis-weather-cover.sweetmoss1.chatgpt.site",
+  "evidenceOrigin": "https://aegis-evidence.sweetmoss1.chatgpt.site",
+  "actualAddressesMatched": true,
+  "sixCoreRoutesHTTP200": true,
+  "onchainReadsConnected": true,
+  "mobileOverflow": false,
+  "browserErrors": [],
+  "evidenceBindings": true,
+  "captureCatalogReachable": true,
+  "financialTransactions": "Not signed by this read-only check"
+}

@@ -1,0 +1,46 @@
+{
+  "chainId": 10143,
+  "network": "Monad Testnet",
+  "status": "deployed-verification-pending",
+  "rpcUrl": "https://testnet-rpc.monad.xyz",
+  "explorer": "https://testnet.monadscan.com",
+  "wallets": {
+    "A": "0xd4fEbE16AefC4498828bF439FD4C6Eb569A37666",
+    "B": "0x48915030F02e64a698c2a72580DE42AFc5856865",
+    "C": "0xDa62770d6caA9A455537E00989166c52264a1349"
+  },
+  "evidenceOrigin": "https://aegis-evidence.sweetmoss1.chatgpt.site",
+  "contracts": {
+    "token": "0x0af86b90d3963f206a855617ced0aff77712e1f8",
+    "manager": "0xd3e3586d19e9a6e5fe61a9e04398f0b492e6a8b9",
+    "resolver": "0xabe43d31bab071c61b94721f005d88e1a7451157"
+  },
+  "deploymentBlock": "69776461",
+  "events": [],
+  "transactions": [
+    {
+      "label": "MockUSDC",
+      "hash": "0xfa401f963a50ffed1eb3b905ed232936f96106853ececd9e85bdf4c1eb87bc3e",
+      "block": "69776461",
+      "gasUsed": "568310"
+    },
+    {
+      "label": "AegisPolicyManager",
+      "hash": "0x7b97978af0eb5c6976692c2664621372bda58fdb8ab78535b6c92893e5d450a4",
+      "block": "69776465",
+      "gasUsed": "4687819"
+    },
+    {
+      "label": "DemoWeatherResolver",
+      "hash": "0x90768ac0ca4137529f37aa11954ef457b4f9b66dd9c6d598dd8e4f3364d689cd",
+      "block": "69776469",
+      "gasUsed": "1393042"
+    },
+    {
+      "label": "initializeAdapter(address)",
+      "hash": "0xcae9926c311c44ee8ad3f6de0b355e849ee030d1108f1efc272d6f84188fef48",
+      "block": "69776478",
+      "gasUsed": "69113"
+    }
+  ]
+}

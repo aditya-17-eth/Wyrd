@@ -1,0 +1,30 @@
+{
+  "chainId": 10143,
+  "checkedAt": "2026-10-10T09:18:08.489Z",
+  "contracts": [
+    {
+      "name": "MockUSDC",
+      "address": "0xc574794b36fedf6dd2f0e621cc2240d96664a1e6",
+      "creationInputMatch": true,
+      "runtimeBytecodeMatch": true,
+      "deployedCodeHash": "0xb8641c62c9db857e026fdcf2a735f39dc5e671373717406f33aed4f4621d1a55"
+    },
+    {
+      "name": "AegisPolicyManager",
+      "address": "0xf72da3dbf0c764e5d962847efce7223877259226",
+      "creationInputMatch": true,
+      "runtimeBytecodeMatch": true,
+      "deployedCodeHash": "0x86232d230cdde01c9420a7a54667968fdefa4d90085f1ac9752375ed795db36c"
+    },
+    {
+      "name": "DemoWeatherResolver",
+      "address": "0x16e8e989931be076c11d821908dc6737c237f4db",
+      "creationInputMatch": true,
+      "runtimeBytecodeMatch": true,
+      "deployedCodeHash": "0x7f35b43d00c30fc7134488cadcd218f3a2edb67928a6109f6dc81a35b59a4d6e"
+    }
+  ],
+  "roleBindingsVerified": true,
+  "eventCeiling": "1000000000",
+  "buyerCeiling": "200000000"
+}

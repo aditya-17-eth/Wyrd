@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-10-10T10:39:07.225Z",
+  "chainId": 10143,
+  "fromDeploymentBlock": "69785714",
+  "inclusiveRangeLimit": 100,
+  "initialLogPages": 176,
+  "refreshLogPages": 3,
+  "milliseconds": 92257,
+  "userConfirmedTransactionFound": true,
+  "activity": [
+    {
+      "hash": "0xf1e95ff382a603ef0c62e720e17fa58a7c80a3e20addb53d267db38e7e82e504",
+      "block": "69801866",
+      "event": "VaultCreated",
+      "timestamp": "1791628240"
+    },
+    {
+      "hash": "0x0daaf3615cec729759c52cb44aaedb2e201ed063d81719505568be4ec0a1cc17",
+      "block": "69791170",
+      "event": "VaultCreated",
+      "timestamp": "1791625009"
+    }
+  ]
+}

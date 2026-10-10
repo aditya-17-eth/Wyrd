@@ -1,0 +1,90 @@
+{
+  "checkedAt": "2026-10-10T10:08:04.603Z",
+  "evidence": {
+    "id": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5~appgver_75d49a0d21ac819187b6a5b0b675f6b7",
+    "project_id": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5",
+    "version_number": 3,
+    "source": {
+      "commit_sha": "d315d8d30292a9d064d8a62eca6a48d5f73fcdbf"
+    },
+    "archive_storage": {
+      "archive_format": "tar",
+      "sediment_file_id": "file_000000007ddc82439824cd78af3fa1ac",
+      "content_hash": "sha256:3dc0a65d990719a2bd3413c5224a9d5930043f7c7acd090677052011c5b0d82d",
+      "size_bytes": 348160,
+      "file_count": 5
+    },
+    "screenshot_url": null,
+    "deployment_id": null,
+    "deployment": {
+      "id": "appgdep_6aca0de154bc819181ab57dd45be8f4e",
+      "project_id": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5",
+      "title": "AEGIS Evidence Archive",
+      "version_id": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5~appgver_75d49a0d21ac819187b6a5b0b675f6b7",
+      "type": "publish",
+      "status": "succeeded",
+      "url": "https://aegis-evidence.sweetmoss1.chatgpt.site",
+      "has_mcp": false,
+      "screenshot_asset_pointer": null,
+      "provider_deployment_id": "site---6ac9dffc70f48191a4af60ff4ad8b6c5",
+      "failure_message": null,
+      "env_set_revision": 2,
+      "updated_at": "2026-10-10T10:05:37.555808+00:00"
+    }
+  },
+  "frontend": {
+    "id": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b~appgver_7c9b6abb29d48191a1ce2fde4eb53da7",
+    "project_id": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b",
+    "version_number": 2,
+    "source": {
+      "commit_sha": "ff58d93668c8500778d03970156e4681696324cf"
+    },
+    "archive_storage": {
+      "archive_format": "tar",
+      "sediment_file_id": "file_00000000e21081f496b277ddad26e15d",
+      "content_hash": "sha256:ab84141b0496a6e09b9df1e3ca62cd050e2c271351eff6085f5055eed9f963f7",
+      "size_bytes": 1945600,
+      "file_count": 80
+    },
+    "screenshot_url": null,
+    "deployment_id": null,
+    "deployment": {
+      "id": "appgdep_6aca0e194a4c81919076668f7baff032",
+      "project_id": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b",
+      "title": "AEGIS — Underwrite uncertainty",
+      "version_id": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b~appgver_7c9b6abb29d48191a1ce2fde4eb53da7",
+      "type": "publish",
+      "status": "succeeded",
+      "url": "https://aegis-weather-cover.sweetmoss1.chatgpt.site",
+      "has_mcp": false,
+      "screenshot_asset_pointer": null,
+      "provider_deployment_id": "site---6ac9dfe154fc8191bc7020f9b8024c6b",
+      "failure_message": null,
+      "env_set_revision": 0,
+      "updated_at": "2026-10-10T10:06:31.853128+00:00"
+    }
+  },
+  "sourceConfiguration": {
+    "latitude": "18.5196",
+    "longitude": "73.8554",
+    "daily": "rain_sum",
+    "models": "era5",
+    "timezone": "Asia/Kolkata",
+    "precipitation_unit": "mm",
+    "cell_selection": "nearest",
+    "validatorVersion": "aegis-era5-daily-v2",
+    "legacySupported": true
+  },
+  "publicObservationSubmission": {
+    "performed": false,
+    "reason": "Configured Monad Testnet manager has zero registered markets."
+  },
+  "validation": {
+    "automatedTests": 37,
+    "responsiveChecks": 36,
+    "isolatedOracle": "Real local commit/finalize receipts with explicitly mocked ERA5 transport",
+    "readOnlyProviderAudit": "2026-07-01",
+    "publicBrowser": "Passed production routes and v2 live-event preparation without a wallet or transactions"
+  },
+  "packaging": "Sources pushed by the Sites workflow. Native Windows tar used with the Sites shared prepare-site-build.cjs after Bash path failure."
+}

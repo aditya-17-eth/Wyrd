@@ -1,0 +1,20 @@
+[
+  {
+    "name": "MockUSDC",
+    "address": "0xc574794b36fedf6dd2f0e621cc2240d96664a1e6",
+    "httpStatus": 200,
+    "response": "{\"success\":true,\"verified\":1,\"total\":2,\"results\":{\"monadvision\":{\"status\":\"success\",\"message\":\"Verified with perfect match\",\"url\":\"https://testnet.monadvision.com/address/0xc574794b36fedf6dd2f0e621cc2240d96664a1e6\"},\"monadscan\":{\"status\":\"failed\",\"message\":\"Already Verified\",\"guid\":\"texwiecwy3fjtbd189emfa2n2na9lejq9shvkxxat1cimknpdx\"}}}"
+  },
+  {
+    "name": "AegisPolicyManager",
+    "address": "0xf72da3dbf0c764e5d962847efce7223877259226",
+    "httpStatus": 200,
+    "response": "{\"success\":true,\"verified\":2,\"total\":2,\"results\":{\"monadvision\":{\"status\":\"success\",\"message\":\"Verified with perfect match\",\"url\":\"https://testnet.monadvision.com/address/0xf72da3dbf0c764e5d962847efce7223877259226\"},\"monadscan\":{\"status\":\"success\",\"message\":\"Pass - Verified\",\"guid\":\"bjjtcicavvw3itjpa2uhfbd5teyj2gamvf4z7ffzjlccgriizx\",\"url\":\"https://testnet.monadscan.com/address/0xf72da3dbf0c764e5d962847efce7223877259226\"}}}"
+  },
+  {
+    "name": "DemoWeatherResolver",
+    "address": "0x16e8e989931be076c11d821908dc6737c237f4db",
+    "httpStatus": 200,
+    "response": "{\"success\":true,\"verified\":2,\"total\":2,\"results\":{\"monadvision\":{\"status\":\"success\",\"message\":\"Verified with perfect match\",\"url\":\"https://testnet.monadvision.com/address/0x16e8e989931be076c11d821908dc6737c237f4db\"},\"monadscan\":{\"status\":\"success\",\"message\":\"Pass - Verified\",\"guid\":\"n9jiive1yhuwptepcsunjkzzmye5mtzfrcaeggutikb5g7ahv6\",\"url\":\"https://testnet.monadscan.com/address/0x16e8e989931be076c11d821908dc6737c237f4db\"}}}"
+  }
+]

@@ -1,0 +1,9 @@
+import {DatabaseSync} from 'node:sqlite';import fs from 'node:fs/promises';import path from 'node:path';
+export async function localStorage(directory){
+  await fs.mkdir(path.join(directory,'objects'),{recursive:true});const sqlite=new DatabaseSync(path.join(directory,'catalog.sqlite'));
+  sqlite.exec(await fs.readFile(new URL('../migrations/0001_evidence.sql',import.meta.url),'utf8').then(sql=>sql.replaceAll('CREATE TABLE ','CREATE TABLE IF NOT EXISTS ').replaceAll('CREATE INDEX ','CREATE INDEX IF NOT EXISTS ')));
+  const prepare=sql=>({bind(...args){const statement=sqlite.prepare(sql);return{async first(){return statement.get(...args)||null;},async run(){const result=statement.run(...args);return{meta:{changes:Number(result.changes)}};},async all(){return{results:statement.all(...args)};}};}});
+  const db={prepare,async batch(statements){sqlite.exec('BEGIN');try{const results=[];for(const statement of statements)results.push(await statement.run());sqlite.exec('COMMIT');return results;}catch(error){sqlite.exec('ROLLBACK');throw error;}}};
+  const bucket={async put(hash,body,options){try{await fs.writeFile(path.join(directory,'objects',hash),body,{flag:'wx'});await fs.writeFile(path.join(directory,'objects',`${hash}.meta`),JSON.stringify(options.httpMetadata||{}));}catch(error){if(error.code!=='EEXIST')throw error;}},async get(hash){try{const body=await fs.readFile(path.join(directory,'objects',hash));let meta={};try{meta=JSON.parse(await fs.readFile(path.join(directory,'objects',`${hash}.meta`),'utf8'));}catch{}return{httpMetadata:meta,async arrayBuffer(){return body.buffer.slice(body.byteOffset,body.byteOffset+body.byteLength);},async text(){return body.toString('utf8');}};}catch(error){if(error.code==='ENOENT')return null;throw error;}}};
+  return{db,bucket,close:()=>sqlite.close()};
+}

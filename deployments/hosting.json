@@ -1,0 +1,56 @@
+{
+  "web": {
+    "projectId": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b",
+    "versionId": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b~appgver_bcdb4ab126fc8191a4f73b1914824e54",
+    "deploymentId": "appgdep_6aca188ddf248191959e912ea998078d",
+    "sourceCommit": "71025121a7e38bf7b49d8c461070581d8a34df93",
+    "status": "succeeded",
+    "access": "public",
+    "url": "https://aegis-weather-cover.sweetmoss1.chatgpt.site",
+    "publishedAt": "2026-10-10T16:21:09.449353+05:30",
+    "environmentRevision": 0
+  },
+  "evidence": {
+    "projectId": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5",
+    "versionId": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5~appgver_75d49a0d21ac819187b6a5b0b675f6b7",
+    "deploymentId": "appgdep_6aca11ed33cc8191bef55b66ba64d81c",
+    "sourceCommit": "d315d8d30292a9d064d8a62eca6a48d5f73fcdbf",
+    "status": "succeeded",
+    "access": "public",
+    "url": "https://aegis-evidence.sweetmoss1.chatgpt.site",
+    "environmentRevision": 2,
+    "publicHealthAndCatalogPreviouslyVerified": true,
+    "publishedAt": "2026-10-10T15:52:53.37355+05:30"
+  },
+  "publicBrowserCheck": {
+    "status": "passed",
+    "mode": "PRODUCTION READ-ONLY; NO WALLET OR TRANSACTIONS",
+    "url": "https://aegis-weather-cover.sweetmoss1.chatgpt.site",
+    "passed": [
+      "resolution route",
+      "operator live-event preparation",
+      "v2 coordinates and exact date source",
+      "no replay fixture in live specification",
+      "disconnected writes disabled",
+      "homepage",
+      "no browser exceptions"
+    ],
+    "preparedObservationDate": "2026-10-17"
+  },
+  "realWalletDemo": {
+    "status": "awaiting-user-browser-signatures",
+    "wallets": [
+      "A",
+      "B",
+      "C"
+    ]
+  },
+  "era5IntegrationRecord": "deployments/era5-integration.json",
+  "rpcFix": {
+    "publicReadOnlyCheck": "deployments/public-check.json",
+    "liveReadCheck": "deployments/rpc-read-check.json",
+    "requestStartsPerSecond": 4,
+    "rateLimitRetries": 2,
+    "multicallRuntimeAndResultChecked": true
+  }
+}

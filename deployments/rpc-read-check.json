@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-10-10T10:52:50.789Z",
+  "chainId": 10143,
+  "readMilliseconds": 4789,
+  "rpcRequests": 12,
+  "methods": [
+    "eth_chainId",
+    "eth_getCode",
+    "eth_call",
+    "eth_call",
+    "eth_getBlockByNumber",
+    "eth_call",
+    "eth_call",
+    "eth_call",
+    "eth_call",
+    "eth_call",
+    "eth_call",
+    "eth_call"
+  ],
+  "vaults": [
+    {
+      "id": "1",
+      "address": "0x494caA956dD5D13B9Dc04607c04Da927F6f5A1ff",
+      "phase": 1,
+      "accountedAssets": "1000000000",
+      "reservedCoverage": "0",
+      "shares": "1000000000",
+      "invited": true
+    },
+    {
+      "id": "2",
+      "address": "0xBE258e511cF383358B6fF2A34Ec12D2C918C4336",
+      "phase": 0,
+      "accountedAssets": "0",
+      "reservedCoverage": "0",
+      "shares": "0",
+      "invited": true
+    }
+  ],
+  "eventCount": 0,
+  "policyCount": 0,
+  "tokenBalance": "9000000000"
+}

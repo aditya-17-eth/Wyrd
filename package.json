@@ -1,0 +1,26 @@
+{
+  "name": "aegis-weather-cover", "private": true, "type": "module",
+  "workspaces": ["web", "evidence"],
+  "scripts": {
+    "test": "node --test evidence/test/*.test.mjs scripts/test/*.test.mjs",
+    "contracts:test": "node scripts/forge.mjs test",
+    "contracts:build": "node scripts/forge.mjs build",
+    "abi": "node scripts/export-abi.mjs",
+    "dev": "npm run dev --workspace web",
+    "typecheck": "npm run typecheck --workspace web",
+    "lint": "npm run lint --workspace web",
+    "build": "npm run build --workspace web && npm run build --workspace evidence",
+    "demo": "node scripts/local-demo.mjs",
+    "verify:evidence": "node scripts/verify-evidence.mjs",
+    "weather:discover": "node --experimental-strip-types scripts/weather.ts discover",
+    "weather:fetch": "node --experimental-strip-types scripts/weather.ts fetch",
+    "weather:forecast": "node --experimental-strip-types scripts/weather.ts forecast",
+    "demo:historical": "node scripts/historical-replay-demo.mjs",
+    "weather:integration": "node scripts/weather-integration.mjs",
+    "oracle:prepare": "node --experimental-strip-types scripts/oracle.ts prepare",
+    "oracle:resolve": "node --experimental-strip-types scripts/oracle.ts resolve",
+    "oracle:verify": "node --experimental-strip-types scripts/oracle.ts verify"
+  },
+  "dependencies": { "viem": "2.57.4", "@openzeppelin/contracts": "5.6.1" },
+  "devDependencies": { "esbuild": "0.25.12", "@playwright/test": "1.56.1" }
+}
