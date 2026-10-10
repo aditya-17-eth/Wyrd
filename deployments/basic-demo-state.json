@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-10T10:54:36.770Z",
+  "checkedAt": "2026-10-10T11:41:09.879Z",
   "vaults": [
     {
       "id": "1",
@@ -18,7 +18,26 @@
       "shares": "0"
     }
   ],
-  "events": [],
+  "events": [
+    {
+      "id": "1",
+      "status": 1,
+      "mode": 1,
+      "archived": {
+        "specification": false,
+        "fixture": false
+      }
+    },
+    {
+      "id": "2",
+      "status": 1,
+      "mode": 1,
+      "archived": {
+        "specification": true,
+        "fixture": true
+      }
+    }
+  ],
   "quotes": [],
   "policies": [],
   "escrow": "0"

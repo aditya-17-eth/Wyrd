@@ -48,7 +48,7 @@ export async function captureSnapshot(ctx,spec,store,{fetcher=fetch,now=()=>Math
     try {
       let response;
       for(let attempt=0;attempt<3;attempt++){
-        try{response=await fetcher(exactURL,{signal:AbortSignal.timeout(10000),redirect:'error',headers:{accept:'application/json'}});if(response.status!==429&&response.status<500||attempt===2)break;await response.body?.cancel();}
+        try{response=await fetcher(exactURL,{signal:AbortSignal.timeout(10000),redirect:'manual',headers:{accept:'application/json'}});if(response.status!==429&&response.status<500||attempt===2)break;await response.body?.cancel();}
         catch(error){if(attempt===2||!['TimeoutError','AbortError','TypeError'].includes(error.name))throw error;}
         if(now()+30>=spec.resolutionDeadline)throw new Error('Retry would exceed committed capture deadline');
         await new Promise(resolve=>setTimeout(resolve,250*2**attempt));

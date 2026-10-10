@@ -1,26 +1,31 @@
 {
   "web": {
     "projectId": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b",
-    "versionId": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b~appgver_bcdb4ab126fc8191a4f73b1914824e54",
-    "deploymentId": "appgdep_6aca188ddf248191959e912ea998078d",
-    "sourceCommit": "71025121a7e38bf7b49d8c461070581d8a34df93",
+    "versionId": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b~appgver_b65041bc388081918820c89b94534c0e",
+    "deploymentId": "appgdep_6aca2a693f548191b0dc6ef182dba2f9",
+    "sourceCommit": "a6b9132ba289a3d463db3ee378c14adc4c2ead7c",
     "status": "succeeded",
     "access": "public",
     "url": "https://aegis-weather-cover.sweetmoss1.chatgpt.site",
-    "publishedAt": "2026-10-10T16:21:09.449353+05:30",
-    "environmentRevision": 0
+    "publishedAt": "2026-10-10T12:07:20.592616+00:00",
+    "environmentRevision": 0,
+    "draftRecoveryVerified": true
   },
   "evidence": {
     "projectId": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5",
-    "versionId": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5~appgver_75d49a0d21ac819187b6a5b0b675f6b7",
-    "deploymentId": "appgdep_6aca11ed33cc8191bef55b66ba64d81c",
-    "sourceCommit": "d315d8d30292a9d064d8a62eca6a48d5f73fcdbf",
+    "versionId": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5~appgver_8140e85f3630819199f671f6ddea034c",
+    "deploymentId": "appgdep_6aca2be9ae688191ad7c14bf3cd9dfe0",
+    "sourceCommit": "791d50c38500968fde23c3ff6688bd49b8b8cc84",
     "status": "succeeded",
     "access": "public",
     "url": "https://aegis-evidence.sweetmoss1.chatgpt.site",
+    "publishedAt": "2026-10-10T12:13:46.649043+00:00",
     "environmentRevision": 2,
-    "publicHealthAndCatalogPreviouslyVerified": true,
-    "publishedAt": "2026-10-10T15:52:53.37355+05:30"
+    "validatorVersionsSupported": [
+      "aegis-era5-daily-v1",
+      "aegis-era5-daily-v2",
+      "aegis-era5-daily-v3"
+    ]
   },
   "publicBrowserCheck": {
     "status": "passed",

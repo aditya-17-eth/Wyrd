@@ -44,21 +44,44 @@ export function CategoryArt({category, className = ''}: {category: CategoryId; c
 }
 
 export function RiskTransferArt() {
-  return <svg className="risk-transfer-art" viewBox="0 0 650 440" fill="none" role="img" aria-label="Conceptual diagram linking risk, reserved capital, and settlement">
-    <defs><pattern id="risk-dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#9297A5" opacity=".22"/></pattern></defs>
-    <rect width="650" height="440" fill="url(#risk-dots)"/>
-    <g stroke="#836EF9" strokeOpacity=".38">
-      {Array.from({length:15},(_,i)=><path key={i} d={`M-20 ${60+i*22} C ${165+i*4} ${40+i*23}, ${180+i*5} ${300-i*7}, 315 ${225+i*2} S 450 ${35+i*21}, 680 ${90+i*19}`}/>)}
+  return <svg className="risk-transfer-art" viewBox="0 0 680 500" fill="none" role="img" aria-label="Illustrated protection vault connecting a defined event, reserved capital and verified evidence">
+    <defs><pattern id="vault-hatching" width="5" height="5" patternUnits="userSpaceOnUse"><path d="m0 5 5-5" stroke="#A9A59E" strokeWidth=".5"/></pattern></defs>
+    <g stroke="#B8B4AC" strokeWidth="1" strokeDasharray="3 5">
+      <path d="m92 290 251-145 246 142-246 143Z"/><path d="M343 145V50M92 290v78l251 144M589 287v78L343 508"/>
+      <path d="m130 221 213-123 210 121M343 98v330"/>
     </g>
-    <path d="m312 67 117 66v135l-117 68-117-68V133Z" fill="#13151E" stroke="#535363"/>
-    <path d="m312 67 117 66-117 67-117-67Z" fill="#1B1B2A" stroke="#686478"/>
-    <path d="m312 200 117-67v135l-117 68Z" fill="#232037" stroke="#686478"/>
-    <path d="M312 201v135M195 133l117 67" stroke="#686478"/>
-    <path d="m312 102 57 32-57 33-57-33Z" stroke="#B8AAF8" strokeWidth="2"/>
-    <path d="m312 118 29 16-29 17-29-17Z" fill="#836EF9"/>
-    <path d="M313 34v-18h148M448 237h126v-65M183 268h-92v54" stroke="#9297A5" strokeOpacity=".6"/>
-    <circle cx="313" cy="34" r="3" fill="#F5F5F2"/><circle cx="448" cy="237" r="3" fill="#F5F5F2"/><circle cx="183" cy="268" r="3" fill="#F5F5F2"/>
-    <g fill="#BDC1CC" fontFamily="inherit" fontSize="12"><text x="475" y="20">Defined risk</text><text x="483" y="160">Reserved capital</text><text x="45" y="346">Onchain settlement</text></g>
-    <g fill="#5E6271" fontFamily="inherit" fontSize="10"><text x="475" y="39">Immutable event terms</text><text x="483" y="180">Full claim coverage</text><text x="45" y="365">Inspectable outcomes</text></g>
+    <g stroke="#171713" strokeWidth="1.2">
+      <path d="M234 348v38c0 30 48 55 108 55s109-25 109-55v-38" fill="#171713"/>
+      <ellipse cx="342" cy="349" rx="109" ry="54" fill="#FDFCF9"/>
+      <path d="M251 336v31c0 25 41 46 91 46s91-21 91-46v-31" fill="#FDFCF9"/>
+      <ellipse cx="342" cy="336" rx="91" ry="45" fill="#171713"/>
+      <ellipse cx="342" cy="331" rx="73" ry="35" fill="#FDFCF9"/>
+      <path d="m237 157 105-61 106 61v161l-106 61-105-61Z" fill="#FDFCF9"/>
+      <path d="m237 157 105 61 106-61-106-61Z" fill="#fff"/>
+      <path d="m342 218 106-61v161l-106 61Z" fill="#F0EEE8"/>
+      <path d="M342 218v161"/>
+      <path d="m248 153 94 54 94-54M249 310l93 54 94-54" stroke="#B8B4AC" strokeDasharray="2 4"/>
+      <path d="m237 160 105 61 106-61v12l-106 61-105-61Z" fill="#171713"/>
+      <path d="m278 224 40 23v44c0 26-16 34-20 36-5-8-20-34-20-59Z" fill="#FFF9ED"/>
+      <path d="m288 264 10 17 13-21" stroke="#DB1405" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="m356 265 76-44v54l-76 44Z" fill="url(#vault-hatching)" stroke="#A9A59E"/>
+      <path d="m369 274 48-28m-48 41 48-28m-48 41 30-18" stroke="#171713" strokeWidth="2"/>
+    </g>
+    <g stroke="#171713" strokeWidth="1.1">
+      <path d="m119 128 74-43 78 45v103l-74 43-78-45Z" fill="#FDFCF9"/>
+      <path d="m119 128 78 45 74-43M197 173v103"/>
+      <path d="m125 125 72 41 68-40" strokeWidth="6"/>
+      <path d="m136 154 42 24m-42-12 32 18m-32-5 42 24" stroke="#8C877D"/>
+      <path d="m142 204 30 17v18l-30-17Z" fill="#FFBA41"/>
+      <path d="m447 82 60-35 78 45v97l-60 35-78-45Z" fill="#FDFCF9"/>
+      <path d="m447 82 78 45 60-35M525 127v97"/>
+      <path d="m452 80 73 42 54-32" strokeWidth="6"/>
+      <path d="m462 112 42 24m-42-12 42 24m-42-12 24 14" stroke="#8C877D"/>
+      <path d="m468 165 26 15v18l-26-15Z" fill="#DB1405"/>
+    </g>
+    <g stroke="#8C877D" strokeDasharray="3 4"><path d="M197 276v43l42 24M525 224v48l-73 42M342 441v26"/><ellipse cx="342" cy="464" rx="109" ry="28"/></g>
+    <g fill="#171713" fontFamily="inherit" fontSize="12"><text x="74" y="72">Defined event</text><text x="474" y="33">Verified evidence</text><text x="470" y="386">Reserved capital</text></g>
+    <path d="M470 373h-37M158 77v20M522 39v14" stroke="#8C877D"/>
+    <g fill="#F57411"><circle cx="158" cy="97" r="3"/><circle cx="522" cy="53" r="3"/><circle cx="433" cy="373" r="3"/></g>
   </svg>;
 }

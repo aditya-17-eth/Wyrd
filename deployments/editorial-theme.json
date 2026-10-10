@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-10",
+  "frontend": {
+    "id": "appgdep_6aca2a693f548191b0dc6ef182dba2f9",
+    "project_id": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b",
+    "title": "AEGIS — Underwrite uncertainty",
+    "version_id": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b~appgver_b65041bc388081918820c89b94534c0e",
+    "type": "publish",
+    "status": "succeeded",
+    "url": "https://aegis-weather-cover.sweetmoss1.chatgpt.site",
+    "has_mcp": false,
+    "screenshot_asset_pointer": null,
+    "provider_deployment_id": "site---6ac9dfe154fc8191bc7020f9b8024c6b",
+    "failure_message": null,
+    "env_set_revision": 0,
+    "updated_at": "2026-10-10T12:07:20.592616+00:00"
+  },
+  "frontendVersion": {
+    "id": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b~appgver_b65041bc388081918820c89b94534c0e",
+    "project_id": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b",
+    "version_number": 6,
+    "source": {
+      "commit_sha": "a6b9132ba289a3d463db3ee378c14adc4c2ead7c"
+    },
+    "archive_storage": {
+      "archive_format": "tar",
+      "sediment_file_id": "file_000000000dec820ab484e0a12a1a8235",
+      "content_hash": "sha256:e8188e50e4a09328898eeed02fc16cb7bcb53137aa6e54f50d6e6415f128f295",
+      "size_bytes": 1976320,
+      "file_count": 80
+    },
+    "screenshot_url": null,
+    "deployment_id": null
+  },
+  "evidence": {
+    "id": "appgdep_6aca2be9ae688191ad7c14bf3cd9dfe0",
+    "project_id": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5",
+    "title": "AEGIS Evidence Archive",
+    "version_id": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5~appgver_8140e85f3630819199f671f6ddea034c",
+    "type": "publish",
+    "status": "succeeded",
+    "url": "https://aegis-evidence.sweetmoss1.chatgpt.site",
+    "has_mcp": false,
+    "screenshot_asset_pointer": null,
+    "provider_deployment_id": "site---6ac9dffc70f48191a4af60ff4ad8b6c5",
+    "failure_message": null,
+    "env_set_revision": 2,
+    "updated_at": "2026-10-10T12:13:46.649043+00:00"
+  },
+  "evidenceVersion": {
+    "id": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5~appgver_8140e85f3630819199f671f6ddea034c",
+    "project_id": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5",
+    "version_number": 6,
+    "source": {
+      "commit_sha": "791d50c38500968fde23c3ff6688bd49b8b8cc84"
+    },
+    "archive_storage": {
+      "archive_format": "tar",
+      "sediment_file_id": "file_000000000c74820a96c2781db77154e9",
+      "content_hash": "sha256:881166c76991f59227fde298d37fcce4cf6bc3a8040734f147d9596f0c492b7f",
+      "size_bytes": 358400,
+      "file_count": 5
+    },
+    "screenshot_url": null,
+    "deployment_id": null
+  },
+  "validation": {
+    "evidenceAndScripts": 73,
+    "contractTests": 23,
+    "responsiveRouteChecks": 36,
+    "cliHistoricalReplay": "Actual Pune ERA5 YES/NO with authenticated CLI, local receipts and verified payouts; no public replay transaction submitted"
+  },
+  "inspiration": "https://dribbble.com/shots/27569663-Landingpage-Design"
+}

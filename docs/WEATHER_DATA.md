@@ -16,7 +16,7 @@ Canonical recursively sorted JSON is hashed with Keccak-256. Specifications bind
 
 ## CLI and archive
 
-Run from the repository root on Node 22.14 or later:
+Run from the repository root on Node 22.14 or later. In Windows PowerShell use `npm.cmd` in place of `npm` when passing named CLI options; some npm PowerShell shims strip those option names. Direct `node --experimental-strip-types scripts/oracle.ts ...` and `scripts/weather.ts ...` also work:
 
 ```powershell
 npm run weather:discover -- --start 2026-06-01 --end 2026-09-30

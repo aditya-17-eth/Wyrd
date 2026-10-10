@@ -1,0 +1,104 @@
+{
+  "spec": {
+    "schema": "aegis-event-v1",
+    "product": "PUNE_RAINFALL_COVER",
+    "chainId": 10143,
+    "manager": "0xf72da3dbf0c764e5d962847efce7223877259226",
+    "adapter": "0x16e8e989931be076c11d821908dc6737c237f4db",
+    "eventId": "2",
+    "mode": "synthetic",
+    "observationDate": "2026-10-17",
+    "observationStart": 1792175400,
+    "observationEnd": 1792261800,
+    "timezone": "Asia/Kolkata",
+    "purchaseCutoff": 1792089000,
+    "minimumLeadTime": 86400,
+    "thresholdMilliMm": "50000",
+    "source": {
+      "endpoint": "https://archive-api.open-meteo.com/v1/archive",
+      "parameters": {
+        "latitude": "18.5204",
+        "longitude": "73.8567",
+        "start_date": "2026-10-17",
+        "end_date": "2026-10-17",
+        "daily": "rain_sum",
+        "models": "era5",
+        "timezone": "Asia/Kolkata",
+        "precipitation_unit": "mm",
+        "cell_selection": "nearest"
+      },
+      "governingGrid": {
+        "latitude": "18.5",
+        "longitude": "73.75"
+      },
+      "validatorVersion": "aegis-era5-daily-v3",
+      "city": "pune"
+    },
+    "captureEligibleAt": 1792693800,
+    "resolutionDeadline": 1793471400,
+    "city": "pune",
+    "weatherVariable": "rain_sum",
+    "unit": "mm",
+    "gridCellSelection": "nearest",
+    "resolutionGracePeriodDays": 14,
+    "snapshotRule": "FIRST_VALID_RESPONSE_ARCHIVED_BY_AEGIS_AFTER_CAPTURE_ELIGIBILITY",
+    "revisionPolicy": "FROZEN_SERVED_SNAPSHOT_INCLUDING_PRELIMINARY_ERA5T; NO_LATER_CORRECTIONS",
+    "maxEventCoverage": "1000000000",
+    "maxBuyerCoverage": "200000000",
+    "invalidRule": "NO_VALID_ONCHAIN_COMMITMENT_BY_DEADLINE; PERMISSIONLESS_TIMEOUT_ONLY",
+    "fixture": {
+      "outcome": "YES",
+      "rainfallMilliMm": "60000",
+      "responseHash": "0x387e6b7de32ecfc53dc389916dc8ae536d2872d0e8be7df7517650e492582930"
+    },
+    "disclosures": [
+      "EDUCATIONAL TESTNET; MOCK FUNDS HAVE NO VALUE; NO REAL WORLD COVERAGE",
+      "TRUSTED CAPTURE SERVICE AND RESOLVER; NO CHALLENGE WINDOW",
+      "GRIDDED REANALYSIS, NOT A LOCAL WEATHER STATION",
+      "SERVED DATA MAY BE PRELIMINARY; UPSTREAM RELEASE IDENTIFIER IS NOT PROVIDED"
+    ]
+  },
+  "terms": {
+    "specHash": "0x4bc724dfc5f6634c52101e2276db52ff44752a448a5981c3df2ab41f4884c321",
+    "sourceConfigHash": "0x3ef8cc06c390d5992dc3e429f4f18a219ede14df969a4f57616dbc6b188c59d8",
+    "observationStart": "1792175400",
+    "observationEnd": "1792261800",
+    "purchaseCutoff": "1792089000",
+    "minimumLeadTime": "86400",
+    "captureEligibleAt": "1792693800",
+    "resolutionDeadline": "1793471400",
+    "thresholdMilliMm": "50000",
+    "maxEventCoverage": "1000000000",
+    "maxBuyerCoverage": "200000000",
+    "mode": 1,
+    "fixtureManifestHash": "0x8a2de39da9834ea3357c94326ef0332eda2493904a1275261ff652ef33f0be6f",
+    "fixtureResponseHash": "0x387e6b7de32ecfc53dc389916dc8ae536d2872d0e8be7df7517650e492582930",
+    "fixtureRainfallMilliMm": "60000",
+    "fixtureOutcome": 1,
+    "specificationURI": "https://aegis-evidence.sweetmoss1.chatgpt.site/evidence/0x4bc724dfc5f6634c52101e2276db52ff44752a448a5981c3df2ab41f4884c321"
+  },
+  "bundle": {
+    "raw": "{\"label\":\"TESTNET DEMONSTRATION — SIMULATED EVENT RESULT\",\"outcome\":\"YES\",\"rainfallMilliMm\":\"60000\",\"simulation\":true}",
+    "responseHash": "0x387e6b7de32ecfc53dc389916dc8ae536d2872d0e8be7df7517650e492582930",
+    "manifest": {
+      "schema": "aegis-evidence-v1",
+      "kind": "synthetic",
+      "chainId": 10143,
+      "manager": "0xf72da3dbf0c764e5d962847efce7223877259226",
+      "adapter": "0x16e8e989931be076c11d821908dc6737c237f4db",
+      "eventId": "2",
+      "specHash": "0x4bc724dfc5f6634c52101e2276db52ff44752a448a5981c3df2ab41f4884c321",
+      "sourceConfigHash": "0x3ef8cc06c390d5992dc3e429f4f18a219ede14df969a4f57616dbc6b188c59d8",
+      "responseHash": "0x387e6b7de32ecfc53dc389916dc8ae536d2872d0e8be7df7517650e492582930",
+      "capturedAt": 1791631452,
+      "validatorVersion": "aegis-era5-daily-v3",
+      "validation": {
+        "valid": true,
+        "rainfallMilliMm": "60000",
+        "outcome": "YES"
+      },
+      "label": "TESTNET DEMONSTRATION — SIMULATED EVENT RESULT"
+    },
+    "manifestHash": "0x8a2de39da9834ea3357c94326ef0332eda2493904a1275261ff652ef33f0be6f"
+  }
+}

@@ -41,7 +41,7 @@ export async function fetchWeather(request,{fetcher=fetch,now=()=>Math.floor(Dat
   let lastError;
   for(let attempt=0;attempt<attempts;attempt++){
     try{
-      const response=await fetcher(apiRequest,{signal:AbortSignal.timeout(10000),redirect:'error',headers:{accept:'application/json'}});
+      const response=await fetcher(apiRequest,{signal:AbortSignal.timeout(10000),redirect:'manual',headers:{accept:'application/json'}});
       if(response.status!==200)throw Object.assign(new Error(`Weather provider HTTP ${response.status}`),{retryable:response.status===429||response.status>=500});
       if(!response.headers.get('content-type')?.includes('application/json'))throw new Error('Weather response is not JSON');
       if(Number(response.headers.get('content-length'))>1_000_000)throw new Error('Weather response too large');
