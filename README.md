@@ -10,6 +10,19 @@ Contracts, six wallet-connected screens, independent evidence service, immutable
 
 **The final contracts are deployed and source-verified on Monad Testnet.** Creation inputs, runtime bytecode, role bindings, and the 1,000/200 exposure ceilings were checked against RPC. The final deployment charged 0.695341258006750886 test MON; actual receipts are in `deployments/monad-testnet.json`. The earlier deployment is preserved in history. Public frontend and independent archive publication records are in `deployments/hosting.json`. The MVP remains incomplete until real A/B/C wallet purchases, settlements, redemption, and competing quotes are verified.
 
+## WYRD deployed contract addresses
+
+Network: **Monad Testnet** · Chain ID: **10143**. Use the **Policy Manager** address when a submission asks for the project's main contract.
+
+| Contract | Deployed address / explorer |
+| --- | --- |
+| Policy Manager — main contract | [`0xf72da3dbf0c764e5d962847efce7223877259226`](https://testnet.monadscan.com/address/0xf72da3dbf0c764e5d962847efce7223877259226) |
+| Weather Resolver | [`0x16e8e989931be076c11d821908dc6737c237f4db`](https://testnet.monadscan.com/address/0x16e8e989931be076c11d821908dc6737c237f4db) |
+| Mock USDC | [`0xc574794b36fedf6dd2f0e621cc2240d96664a1e6`](https://testnet.monadscan.com/address/0xc574794b36fedf6dd2f0e621cc2240d96664a1e6) |
+| Demo vault #1 | [`0x494caA956dD5D13B9Dc04607c04Da927F6f5A1ff`](https://testnet.monadscan.com/address/0x494caA956dD5D13B9Dc04607c04Da927F6f5A1ff) |
+
+These contracts use test MON and valueless mock USDC. Deployment receipts and verification records are retained in [deployments/](deployments/).
+
 ## Why underwriting differs from speculation
 
 The underwriter commits capital to fund a buyer's conditional payout and receives the contractual premium only after settlement. Shares cannot be transferred, deposits stop when underwriting begins, and capital cannot exit while liabilities remain. The prototype does not offer tradable prediction positions or leverage. Underwriters need compensation for expected claims, correlated weather losses, capital lockup, operating costs, and their opportunity cost. A manually quoted premium does not demonstrate profitable or actuarially sound underwriting.
