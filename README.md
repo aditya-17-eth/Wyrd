@@ -1,15 +1,19 @@
-# AEGIS — Underwrite uncertainty.
+<div align="center">
 
-A category-neutral onchain risk marketplace combining parametric protection and collateralized underwriting. The educational Monad Testnet prototype currently implements Pune rainfall cover; Travel, Agriculture, Logistics, and Events are clearly labeled upcoming categories. Buyers accept manager-set quotes; invited underwriters reserve the entire maximum claim. A designated authority commits weather evidence, anyone can finalize that commitment, and contracts settle payouts or refunds.
+<img src="web/public/brand/wyrd-shield.png" alt="Wyrd shield" width="96" />
 
-**Mock funds have no monetary value. There is no real-world coverage, guaranteed return, licensed offering, independent audit, or decentralized weather truth guarantee.**
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/wyrd-wordmark-dark.png" />
+  <img src="web/public/brand/wyrd-wordmark.png" alt="Wyrd" width="220" />
+</picture>
 
-## Current engineering status
+### Underwrite uncertainty.
 
-Contracts, six wallet-connected screens, independent evidence service, immutable ERA5 specifications, competing vaults, and reproducible local demo are implemented. The local demo executed 55 real Monad-configured Anvil transactions, including YES/NO/INVALID settlement, redemption, and purchase from Wallet C's competing vault. Browser tests executed another purchase-to-settlement flow through the UI. Typecheck, lint, production build, contract scenario/fuzz/invariant tests, and evidence tests have been executed; see `docs/PROGRESS.md` for the latest exact results.
+An onchain risk marketplace on Monad: buy parametric protection against real-world events, or back it with fully collateralized capital.
 
-**The final contracts are deployed and source-verified on Monad Testnet.** Creation inputs, runtime bytecode, role bindings, and the 1,000/200 exposure ceilings were checked against RPC. The final deployment charged 0.695341258006750886 test MON; actual receipts are in `deployments/monad-testnet.json`. The earlier deployment is preserved in history. Public frontend and independent archive publication records are in `deployments/hosting.json`. The MVP remains incomplete until real A/B/C wallet purchases, settlements, redemption, and competing quotes are verified.
+[**Live app**](https://wyrd-rosy.vercel.app/) · [**Project post on X**](https://x.com/Adity0ux/status/2108896685493825935) · [Docs](docs/) · [Contracts on Monad Testnet](#deployed-contracts-monad-testnet)
 
+<<<<<<< HEAD
 ## WYRD deployed contract addresses
 
 Network: **Monad Testnet** · Chain ID: **10143**. Use the **Policy Manager** address when a submission asks for the project's main contract.
@@ -24,8 +28,41 @@ Network: **Monad Testnet** · Chain ID: **10143**. Use the **Policy Manager** ad
 These contracts use test MON and valueless mock USDC. Deployment receipts and verification records are retained in [deployments/](deployments/).
 
 ## Why underwriting differs from speculation
+=======
+![Monad Testnet](https://img.shields.io/badge/Monad-Testnet%2010143-836EF9) ![Solidity](https://img.shields.io/badge/Solidity-0.8.28-363636) ![Next.js](https://img.shields.io/badge/Next.js-16-000000) ![License: MIT](https://img.shields.io/badge/License-MIT-green)
+>>>>>>> d358febc97dc9e11f2a776f4cfc949e105810abd
 
-The underwriter commits capital to fund a buyer's conditional payout and receives the contractual premium only after settlement. Shares cannot be transferred, deposits stop when underwriting begins, and capital cannot exit while liabilities remain. The prototype does not offer tradable prediction positions or leverage. Underwriters need compensation for expected claims, correlated weather losses, capital lockup, operating costs, and their opportunity cost. A manually quoted premium does not demonstrate profitable or actuarially sound underwriting.
+</div>
+
+> [!WARNING]
+> Wyrd is an educational testnet prototype. Mock funds have no monetary value. There is no real-world coverage, guaranteed return, licensed offering, independent audit, or decentralized guarantee that the weather data is true.
+
+![Wyrd homepage](docs/images/screenshot-home.jpg)
+
+## What is Wyrd?
+
+Some risks are easy to describe and hard to insure. "More than X mm of rain falls on the day of my event" is one of them. Wyrd turns a risk like that into a contract with fixed terms:
+
+- **Buyers** pay a premium for a fixed payout that triggers automatically if the defined event happens.
+- **Underwriters** deposit capital into a vault that reserves the full maximum claim for every policy it backs, and earn the premium when the policy settles.
+- **Settlement** happens onchain against weather evidence that anyone can inspect and verify by hash.
+
+The first live category is **rainfall cover for Pune and Mumbai**, settled on ERA5 reanalysis data. Travel, Agriculture, Logistics, and Events are shown in the app as upcoming categories.
+
+### Why it is underwriting, not betting
+
+Underwriters commit capital to fund someone else's conditional payout, and they only receive the premium after settlement. Vault shares cannot be transferred, deposits close once underwriting begins, and capital cannot leave while liabilities remain. There are no tradable prediction positions and no leverage. A premium set by hand does not show that the underwriting is profitable or actuarially sound; see [ECONOMICS.md](docs/ECONOMICS.md).
+
+## How it works
+
+1. **Define the event.** A dated weather specification fixes the location grid cell, the IST calendar day, the rainfall threshold, and how the governing data snapshot is chosen. Once registered, it cannot be changed.
+2. **Fund a vault.** Invited underwriters deposit mock USDC during the funding phase, then open the vault for underwriting.
+3. **Quote and buy.** The vault publishes a quote (for example, 200 mUSDC of cover for a 25 mUSDC premium). Buying it locks the full 200 mUSDC claim in the vault and holds the premium in a separate escrow.
+4. **Commit evidence.** The evidence service archives the raw Open-Meteo ERA5 response with content hashes. A designated resolver authority commits the result onchain before the 14-day deadline.
+5. **Settle.** Anyone can finalize a valid commitment. On **YES**, the reserved claim is paid to the buyer. On **NO**, the reserve is released back to the vault. In both cases the vault earns the premium. On **INVALID** (no valid commitment by the deadline), the buyer's premium is refunded.
+6. **Redeem.** After issuance ends and every policy has settled, the epoch closes and underwriters redeem their shares.
+
+![Underwriting vault with reserved claims](docs/images/screenshot-underwrite.jpg)
 
 ## Architecture
 
@@ -43,72 +80,141 @@ flowchart LR
   Frontend --> Archive
 ```
 
-Solidity 0.8.28, OpenZeppelin 5.6.1, Foundry 1.8.0 with Monad execution, Next.js 16.4, TypeScript, Tailwind, shadcn-style Radix button primitives, wagmi 3, and viem 2. Evidence uses a separately deployed Cloudflare Worker, R2 objects, and D1 capture catalog. Local evidence storage uses SQLite and files with the same interface.
+| Layer | Stack |
+|---|---|
+| Contracts | Solidity 0.8.28, OpenZeppelin 5.6.1, Foundry 1.8 with Monad execution |
+| Frontend | Next.js 16 (static export), React 19, TypeScript, Tailwind 4, wagmi 3, viem 2 |
+| Evidence service | Cloudflare Worker, R2 object storage, D1 capture catalog (SQLite and local files when run locally) |
+| Weather data | Open-Meteo `models=era5` daily `rain_sum` |
 
-## Setup and checks
+More detail: [ARCHITECTURE.md](docs/ARCHITECTURE.md), [PRODUCT_SPEC.md](docs/PRODUCT_SPEC.md), [EVENT_SPECIFICATION.md](docs/EVENT_SPECIFICATION.md).
 
-Use Node.js 22.14+ and the workspace-local Foundry binaries under `.tools/foundry`. Their official 1.8.0 download was checked against the release SHA-256. Install that release on a fresh machine; do not use a legacy Monad Foundry fork. Run from this project directory:
+## Deployed contracts (Monad Testnet)
+
+The final contracts are deployed on Monad Testnet (chain ID 10143) and source-verified. Creation inputs, runtime bytecode, role bindings, and the 1,000 / 200 mUSDC exposure ceilings were checked against RPC.
+
+| Contract | Address |
+|---|---|
+| `AegisPolicyManager` | [`0xf72da3dbf0c764e5d962847efce7223877259226`](https://testnet.monadscan.com/address/0xf72da3dbf0c764e5d962847efce7223877259226) |
+| `DemoWeatherResolver` | [`0x16e8e989931be076c11d821908dc6737c237f4db`](https://testnet.monadscan.com/address/0x16e8e989931be076c11d821908dc6737c237f4db) |
+| `MockUSDC` | [`0xc574794b36fedf6dd2f0e621cc2240d96664a1e6`](https://testnet.monadscan.com/address/0xc574794b36fedf6dd2f0e621cc2240d96664a1e6) |
+
+Underwriting vaults are created by the policy manager. The contracts were deployed before the rename and keep their original `Aegis` names. Deployment receipts are in [`deployments/monad-testnet.json`](deployments/monad-testnet.json) and verification results in [`deployments/verification-results.json`](deployments/verification-results.json).
+
+## Run it locally
+
+**Requirements:** Node.js 22.14 or newer, and [Foundry](https://getfoundry.sh) 1.8 or newer (the official release, not a legacy Monad fork).
 
 ```powershell
+git clone https://github.com/aditya-17-eth/Wyrd.git
+cd Wyrd
 npm ci
-.\.tools\foundry\forge.exe install --root contracts --no-git foundry-rs/forge-std@v1.11.0
-npm run contracts:test
-npm run abi
-npm test
+
+# The forge wrapper looks for .tools/foundry/forge(.exe).
+# Copy your Foundry binaries there, or set FORGE_BIN to your forge path.
+
+# Install forge-std (run from inside contracts/)
+cd contracts
+forge install --no-git foundry-rs/forge-std@v1.11.0
+cd ..
+```
+
+### Checks
+
+```powershell
+npm run contracts:test   # lifecycle, fuzz, and invariant tests
+npm run abi              # export ABIs to the web app and evidence service
+npm test                 # evidence, generator, and RPC tests
 npm run typecheck
 npm run lint
 npm run build
 ```
 
-The lockfile pins dependencies. MONSKILLS was installed in the parent workspace `.agents/skills`; start with its `monskill` routing skill. The user's external-wallet and encrypted-keystore decisions supersede its Para/Alchemy defaults.
+### Local demo on a Monad-configured Anvil chain
 
-## Reproduce the local demonstration
-
-In three terminals, from this directory:
+Run each in its own terminal, from the repo root:
 
 ```powershell
-# Terminal 1
+# 1. Local chain
 .\.tools\foundry\anvil.exe --network monad --chain-id 31337 --host 127.0.0.1 --port 8545
-# Terminal 2 (run after Anvil is ready)
+
+# 2. Once Anvil is ready: deploy, seed the demo, start the evidence service
 npm run abi
 npm run demo
 npm run dev --workspace evidence
-# Terminal 3
+
+# 3. Frontend
 npm run dev
 ```
 
-Open `http://127.0.0.1:3000/operator/` and import `deployments/local.json`. This verifies code and manager/token/resolver bindings against RPC. It is explicitly labeled LOCAL. Anvil's conventional development accounts A/B/C are used only by loopback-guarded local scripts and browser tests. Never fund or use those accounts on another network. The seed script preserves previous deployments and liabilities; reruns deploy fresh contracts rather than erase history.
+Open <http://127.0.0.1:3000/operator/> and import `deployments/local.json`. The app checks the code and contract bindings against RPC and labels everything **LOCAL**. The demo uses Anvil's well-known development accounts through loopback-only scripts. Never fund or use those accounts on another network.
+
+Browser QA against the local chain:
 
 ```powershell
-node scripts/browser-qa.mjs
+node scripts/prepare-browser-qa.mjs
+node scripts/browser-qa.mjs   # real local transactions through the UI
+node scripts/design-qa.mjs    # layout checks at 1440 / 1024 / 768 / 390 px
 ```
 
-This uses a fresh headless Chrome session and a local-only EIP-1193 test adapter. Its transactions execute on Anvil; no mocked token balances or confirmation messages are returned. Public builds contain neither that adapter nor signing keys.
+### Weather tooling
 
-## Monad deployment and real demo
+```powershell
+npm run weather:discover     # real historical replay discovery
+npm run oracle:prepare
+npm run demo:historical
+```
 
-See `docs/DEPLOYMENT.md` and `docs/DEMO_SCRIPT.md`. Import Wallet A into an encrypted Foundry keystore yourself and keep the key/password out of chat, source, and logs. Run `scripts/deploy-testnet.ps1`, record receipts, verify deployed sources through the MONSKILLS verification API, then configure the evidence service's verified manager allowlist. Seed and fund vaults using the authorized A/C wallets and buy policies with B. Until these actions are executed, the app shows its pending deployment state and disables financial transactions.
+See [WEATHER_DATA.md](docs/WEATHER_DATA.md) for location configs, forecast references, oracle CLI operations, and licensing.
 
-Primary deployment metadata, actual faucet hashes, and verification records live in `deployments/`. Local transaction records are in `.local/demo-results.json`. No fake explorer links or predicted simulation addresses are published as deployed contracts.
+### Deploying to Monad Testnet
 
-## Product and trust limits
+See [DEPLOYMENT.md](docs/DEPLOYMENT.md) and [DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md). Import the deployer wallet into an encrypted Foundry keystore yourself, and keep keys and passwords out of chat, source, and logs. Copy `.env.example` to `.env` for local configuration; the browser only reads public deployment JSON, never secrets.
 
-The governing value is Open-Meteo's `models=era5` daily `rain_sum` for the committed grid and IST calendar day. It is gridded reanalysis, not a venue station reading. The first validated snapshot archived from day 5 to before day 14 is frozen. Preliminary ERA5T is accepted; later corrections do not change settlement. Onchain commitment must occur before the 14-day deadline. After a valid commitment, INVALID is permanently disabled and finalization remains possible after the deadline. Without that commitment, permissionless timeout INVALID refunds premiums.
+## Trust model and limits
 
-The trusted authority can post false values or withhold commitment; the trusted capture service can be unavailable or misbehave. Content hashes make changes inspectable but do not prove weather truth or guarantee storage availability. Infrastructure administrators can affect archive availability even though the application exposes no overwrite/delete API. Parametric basis risk means an event organizer may suffer losses without the trigger, or receive a payout without equivalent losses.
+- **Governing data.** Settlement uses Open-Meteo's ERA5 daily `rain_sum` for the committed grid cell and IST day. This is gridded reanalysis, not a reading from a station at your venue.
+- **Snapshot rule.** The first validated snapshot archived between day 5 and day 14 is frozen. Preliminary ERA5T is accepted, and later corrections do not change settlement.
+- **Deadline.** A commitment must land onchain before the 14-day deadline. After a valid commitment, INVALID is permanently disabled and anyone can finalize, even after the deadline. Without one, anyone can trigger a timeout INVALID that refunds the premium.
+- **Trusted parties.** The resolver authority could post a false value or withhold a commitment, and the capture service could be unavailable or misbehave. Content hashes make tampering detectable; they do not prove the weather was real or guarantee storage availability.
+- **Basis risk.** An event organizer may suffer losses without the trigger firing, or receive a payout without equivalent losses.
+- **Not integrated:** UMA (not listed on Monad during research). Also out of scope for v1: forecast-based pricing, AI underwriting, indexers, tranches, yield strategies, and mainnet.
 
-UMA is not integrated: its published network list did not contain Monad during research. Adapter-based future integration needs verified deployment addresses, incentives, dispute design, and bridge/trust analysis. No pricing probability is fabricated. Forecast ensemble estimates, generalized products, AI underwriting, indexers, tranches, yield strategies, and mainnet deployment are outside v1.
+Full analysis: [ORACLE_TRUST_MODEL.md](docs/ORACLE_TRUST_MODEL.md), [THREAT_MODEL.md](docs/THREAT_MODEL.md), [OBJECTIONS_AND_RESPONSES.md](docs/OBJECTIONS_AND_RESPONSES.md).
 
-## Licenses and attribution
+## Project status
 
-AEGIS code is MIT licensed. OpenZeppelin, wagmi, viem, Next.js, Tailwind, Radix, and lucide licenses remain with their packages. Weather attribution and API-use restrictions are documented in `docs/ATTRIBUTION.md`. The free Open-Meteo API is used only for this educational non-commercial prototype; commercial or promotional use requires appropriate provider permission or subscription.
+| Area | Status |
+|---|---|
+| Contracts | Deployed and source-verified on Monad Testnet |
+| Tests | Contract lifecycle, fuzz, and invariant suites; evidence and RPC tests |
+| Frontend | Live at [wyrd-rosy.vercel.app](https://wyrd-rosy.vercel.app/), with explore, protection, underwriting, portfolio, resolution, operator, and docs pages |
+| Evidence archive | Published as an independent service |
+| Testnet demo | Vault #1 funded; full buyer, settlement, redemption, and competing-vault flow with real wallets still in progress |
 
-## Frontend design and validation
+Exact, dated results are recorded in [PROGRESS.md](docs/PROGRESS.md).
 
-The category-neutral homepage, category previews, filtered discovery, market detail, protection, underwriting, portfolio tabs, resolution, operator, and documentation use one shared visual system. See `docs/FRONTEND_DESIGN.md`.
+## Documentation
 
-Run `node scripts/design-qa.mjs` for category behavior and layout checks at 1440/1024/768/390 pixels. For wallet QA against the existing loopback-only Anvil deployment, first run `node scripts/prepare-browser-qa.mjs`, then `node scripts/browser-qa.mjs`. The preparation script registers fresh synthetic fixtures while preserving prior liabilities. Browser QA checks real local transactions, wrong-network and rejection states, approvals, deposits, quotes, settlement, capital locks, and redemption. Never use its conventional test accounts on a remote network.
+| Document | Covers |
+|---|---|
+| [PRODUCT_SPEC.md](docs/PRODUCT_SPEC.md) | Product scope and user flows |
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design |
+| [EVENT_SPECIFICATION.md](docs/EVENT_SPECIFICATION.md) | How weather events are specified |
+| [ECONOMICS.md](docs/ECONOMICS.md) | Underwriting economics |
+| [ORACLE_TRUST_MODEL.md](docs/ORACLE_TRUST_MODEL.md) | Resolver trust assumptions |
+| [THREAT_MODEL.md](docs/THREAT_MODEL.md) | Threats and mitigations |
+| [WEATHER_DATA.md](docs/WEATHER_DATA.md), [ERA5_INTEGRATION.md](docs/ERA5_INTEGRATION.md) | Weather data pipeline |
+| [DEPLOYMENT.md](docs/DEPLOYMENT.md), [DEMO_SCRIPT.md](docs/DEMO_SCRIPT.md) | Deploying and demoing |
+| [FRONTEND_DESIGN.md](docs/FRONTEND_DESIGN.md), [FRONTEND_VALIDATION.md](docs/FRONTEND_VALIDATION.md) | UI design system and QA |
+| [VALIDATION_PLAN.md](docs/VALIDATION_PLAN.md), [PROGRESS.md](docs/PROGRESS.md) | Validation plan and results |
 
-## Pune and Mumbai weather integration
+## License and attribution
 
-Read [WEATHER_DATA.md](docs/WEATHER_DATA.md) for immutable v3 location configurations, real historical replay discovery, forecast references, oracle CLI operations, trust assumptions and licensing. Run `npm run weather:discover`, `npm run oracle:prepare`, and `npm run demo:historical`. Earlier issued v1/v2 terms and deployed interfaces are preserved. Public testnet registration/resolution uses the authorized wallet.
+Wyrd's code is [MIT licensed](LICENSE). OpenZeppelin, wagmi, viem, Next.js, Tailwind, Radix, and lucide keep their own licenses. Weather attribution and API-use restrictions are in [ATTRIBUTION.md](docs/ATTRIBUTION.md). The free Open-Meteo API is used only for this non-commercial educational prototype; commercial use needs the provider's permission or a subscription.
+
+<div align="center">
+
+Built on [Monad](https://monad.xyz) · [Live app](https://wyrd-rosy.vercel.app/) · [Wyrd on X](https://x.com/Adity0ux/status/2108896685493825935)
+
+</div>
