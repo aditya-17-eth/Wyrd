@@ -1,15 +1,17 @@
 {
   "web": {
     "projectId": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b",
-    "versionId": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b~appgver_b65041bc388081918820c89b94534c0e",
-    "deploymentId": "appgdep_6aca2a693f548191b0dc6ef182dba2f9",
-    "sourceCommit": "a6b9132ba289a3d463db3ee378c14adc4c2ead7c",
+    "versionId": "appgprj_6ac9dfe154fc8191bc7020f9b8024c6b~appgver_ed3d269aa0748191af42be2c4e6f3218",
+    "deploymentId": "appgdep_6aca404eabfc8191ae77dcadb8d6eb61",
+    "sourceCommit": "73e3f5f7ef1cdf9f97acf535265bbb278490ec61",
     "status": "succeeded",
     "access": "public",
     "url": "https://aegis-weather-cover.sweetmoss1.chatgpt.site",
-    "publishedAt": "2026-10-10T12:07:20.592616+00:00",
+    "publishedAt": "2026-10-10T19:10:47.548838+05:30",
     "environmentRevision": 0,
-    "draftRecoveryVerified": true
+    "quickDemoUrl": "https://aegis-weather-cover.sweetmoss1.chatgpt.site/demo/",
+    "previewMode": "Illustrative walkthrough; no signatures or transactions",
+    "realActions": "Use actual deployed contracts and verified archived evidence"
   },
   "evidence": {
     "projectId": "appgprj_6ac9dffc70f48191a4af60ff4ad8b6c5",
@@ -19,7 +21,7 @@
     "status": "succeeded",
     "access": "public",
     "url": "https://aegis-evidence.sweetmoss1.chatgpt.site",
-    "publishedAt": "2026-10-10T12:13:46.649043+00:00",
+    "publishedAt": "2026-10-10T17:43:46.649043+05:30",
     "environmentRevision": 2,
     "validatorVersionsSupported": [
       "aegis-era5-daily-v1",

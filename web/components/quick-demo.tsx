@@ -1,0 +1,61 @@
+'use client';
+import {useState,useEffect} from 'react';
+import Link from 'next/link';
+import {type Address,type Abi} from 'viem';
+import {Button} from './ui/button';
+import {abis} from '@/lib/generated/abis';
+import {publicClient,exactMoney,millimetres,statusNames,type Deployment,type Protocol} from '@/lib/protocol';
+import {loadWeatherSpecification,verifiedResolverArgs} from '@/lib/weather-evidence';
+
+type Tx=(to:Address,abi:Abi,name:string,args?:readonly unknown[])=>Promise<void>;
+export function QuickDemo({d,data,address,ready,transact,setNotice}:{d:Deployment;data?:Protocol;address?:Address;ready:boolean;transact:Tx;setNotice:(message:string)=>void}){
+  const [busy,setBusy]=useState(false);
+  const [preview,setPreview]=useState(true);
+  const same=(a?:string,b?:string)=>!!a&&!!b&&a.toLowerCase()===b.toLowerCase();
+  const synthetic=data?.events.filter(e=>e.terms.mode===1&&e.terms.fixtureOutcome===1)||[];
+  const policies=data?.policies.filter(p=>synthetic.some(e=>e.id===p.eventId))||[];
+  const quote=data?.quotes.find(q=>q.status===1&&q.expiry>data.now&&synthetic.some(e=>e.id===q.eventId&&e.resolution.status===1&&data.now<e.terms.purchaseCutoff)&&data.vaults.some(v=>v.id===q.vaultId&&v.phase===1&&v.availableCapacity>=q.coverage&&data.now<v.issuanceDeadline));
+  const policy=policies.find(p=>!p.settled)||(quote?undefined:policies.at(-1));
+  const event=synthetic.find(e=>e.id===policy?.eventId);
+  const buyer=same(address,d.wallets.B),resolver=same(address,data?.authority);
+  const stage=policy?policy.settled?3:(event?.resolution.status||1)>=3?2:1:0;
+  const marketEvent=event||synthetic.find(e=>e.id===quote?.eventId)||synthetic.at(-1);
+  const finalizedPayout=event?.resolution.status===3?policy?.coverage:0n;
+  async function run(operation:()=>Promise<void>){setBusy(true);try{await operation();}catch(error){setNotice(error instanceof Error?error.message:'Demo action failed.');}finally{setBusy(false);}}
+  async function recordResult(){if(!event||!data||!resolver)throw new Error('Switch to Wallet A to record the simulated result.');
+    if(event.resolution.status===1){const args=await verifiedResolverArgs(event,d,event.terms.fixtureManifestHash);await transact(d.contracts!.resolver,abis.DemoWeatherResolver,'commitEvidence',args);
+      const current=await publicClient(d).readContract({address:d.contracts!.resolver,abi:abis.DemoWeatherResolver,functionName:'getResolution',args:[event.requestId]});if(current.status!==2)return;
+    }
+    await transact(d.contracts!.resolver,abis.DemoWeatherResolver,'finalize',[event.requestId]);
+  }
+  async function buy(){if(!quote||!data||!buyer)throw new Error('Switch to Wallet B to buy demo cover.');
+    if((data.allowance||0n)<quote.premium){await transact(d.contracts!.token,abis.MockUSDC,'approve',[d.contracts!.manager,quote.premium]);const allowance=await publicClient(d).readContract({address:d.contracts!.token,abi:abis.MockUSDC,functionName:'allowance',args:[address!,d.contracts!.manager]});if(allowance<quote.premium)return;}
+    await transact(d.contracts!.manager,abis.AegisPolicyManager,'purchase',[quote.id]);
+  }
+  async function offer(){if(!data||!resolver)throw new Error('Switch to Wallet A to prepare an offer.');const next=[...synthetic].reverse().find(e=>e.resolution.status===1&&data.now<e.terms.purchaseCutoff&&!data.policies.some(p=>p.eventId===e.id)&&!data.quotes.some(q=>q.eventId===e.id&&q.status===1&&q.expiry>data.now));
+    const vault=data.vaults.find(v=>same(v.quotingManager,d.wallets.A)&&v.mode===1&&v.phase===1&&v.availableCapacity>=200_000_000n&&data.now<v.issuanceDeadline);
+    if(!next||!vault)throw new Error('A fresh archived event and funded vault are needed. Open Advanced setup.');await loadWeatherSpecification(next,d);
+    await verifiedResolverArgs(next,d,next.terms.fixtureManifestHash);
+    const expiry=[next.terms.purchaseCutoff,data.now+86400n,vault.issuanceDeadline].reduce((a,b)=>a<b?a:b);
+    await transact(d.contracts!.manager,abis.AegisPolicyManager,'publishQuote',[next.id,vault.id,200_000_000n,25_000_000n,expiry]);
+  }
+  const canAct=ready&&!busy;
+  return <div className="quick-demo"><section className="panel quick-demo-intro"><span className="eyebrow">WYRD · QUICK DEMO</span><h2>Rainfall cover in three steps.</h2><p>Buy cover. Record the simulated result. Send the payout.</p><div className="simulation-label">TESTNET DEMONSTRATION — SIMULATED EVENT RESULT</div><div className="evidence-actions"><Button variant={preview?'default':'outline'} onClick={()=>setPreview(true)}>Demo mode · no wallet needed</Button><Button variant={preview?'outline':'default'} onClick={()=>setPreview(false)}>Real transactions</Button></div>{!preview&&<div className="quick-demo-steps">{['Buy cover','Record result','Send payout'].map((label,i)=><div className={stage>i?'demo-step done':stage===i?'demo-step current':'demo-step'} key={label}><strong>{stage>i?'✓':i+1}</strong><span>{label}</span></div>)}</div>}</section>
+  <section className="panel"><span className="eyebrow">THE MARKET QUESTION</span><h2>{marketEvent?`Will daily rainfall in ${marketEvent.weather?.displayName||'the committed location'} reach ${millimetres(marketEvent.terms.thresholdMilliMm)} mm or more on ${new Intl.DateTimeFormat('en-IN',{dateStyle:'medium',timeZone:'Asia/Kolkata'}).format(new Date(Number(marketEvent.terms.observationStart)*1000))}?`:'Loading the registered market question…'}</h2>{marketEvent&&<p>Registered event #{marketEvent.id.toString()} · synthetic demonstration · <a href={marketEvent.terms.specificationURI} target="_blank" rel="noreferrer">Inspect exact terms</a></p>}</section>
+  {preview?<DemoWalkthrough policy={policy} quote={quote} event={marketEvent}/>:!data?<section className="panel"><p>Reading the actual contract state…</p></section>:<section className="panel quick-demo-action"><div className="stats-row compact"><div className="stat"><span>Premium</span><strong>{exactMoney(policy?.premium||quote?.premium)} <small>mUSDC</small></strong></div><div className="stat"><span>Maximum payout</span><strong>{exactMoney(policy?.coverage||quote?.coverage)} <small>mUSDC</small></strong></div></div>
+  {!address&&<p><strong>Connect your wallet using the button above.</strong></p>}
+  {stage===0&&<><h2>1 · Buy cover</h2>{quote?<><p>Use <strong>Wallet B</strong>. Confirm the token approval, then the purchase. The full payout is reserved when you buy.</p>{(data.tokenBalance||0n)<quote.premium&&<Button disabled={!canAct||!buyer} onClick={()=>void run(()=>transact(d.contracts!.token,abis.MockUSDC,'faucet'))}>Get free demo tokens</Button>}<Button disabled={!canAct||!buyer||(data.tokenBalance||0n)<quote.premium} onClick={()=>void run(buy)}>Buy cover · {exactMoney(quote.premium)} mUSDC</Button>{address&&!buyer&&<p className="tiny">Switch your browser wallet to Wallet B ({d.wallets.B.slice(0,6)}…{d.wallets.B.slice(-4)}).</p>}</>:<><p>Wallet A can publish an offer from an already archived event.</p><Button disabled={!canAct||!resolver} onClick={()=>void run(offer)}>Prepare 200 / 25 demo offer</Button></>}</>}
+  {stage===1&&<><span className="pill">PURCHASE CONFIRMED · POLICY #{policy!.id.toString()}</span><h2>2 · Record the simulated YES result</h2><p>Use <strong>Wallet A</strong>. This checks the archived evidence, then asks for {event?.resolution.status===2?'one wallet confirmation to finalize':'two wallet confirmations: commit, then finalize'}.</p><Button disabled={!canAct||!resolver} onClick={()=>void run(recordResult)}>{busy?'Check your wallet…':'Record simulated YES result'}</Button>{address&&!resolver&&<p className="tiny">Switch your browser wallet to Wallet A ({d.wallets.A.slice(0,6)}…{d.wallets.A.slice(-4)}).</p>}</>}
+  {stage===2&&<><span className="pill">{statusNames[event!.resolution.status].toUpperCase()}</span><h2>3 · Settle the policy</h2><p>Any connected wallet can settle. The finalized outcome pays {exactMoney(finalizedPayout)} mUSDC in coverage directly to the buyer; INVALID refunds the premium.</p><Button disabled={!canAct} onClick={()=>void run(()=>transact(d.contracts!.manager,abis.AegisPolicyManager,'settlePolicy',[policy!.id]))}>Settle · {exactMoney(finalizedPayout)} mUSDC coverage payout</Button></>}
+  {stage===3&&<><span className="pill">DEMO COMPLETE · SETTLED ONCHAIN</span><h2>{exactMoney(policy!.payout)} mUSDC paid to the buyer.</h2><p>Policy #{policy!.id.toString()} is settled. The result and payout are read from the contracts.</p><Button variant="outline" disabled={!canAct||!resolver} onClick={()=>void run(offer)}>Prepare the next demo offer</Button>{quote&&<p><Link href="/buy/">A fresh quote is available. Buy the next policy.</Link></p>}</>}
+  <details className="quick-demo-proof"><summary>Evidence and contract details</summary>{event&&<><p>Event #{event.id.toString()} · {statusNames[event.resolution.status]}</p><a href={event.terms.specificationURI} target="_blank" rel="noreferrer">Exact registered terms</a><p><a href={`${d.evidenceOrigin}/evidence/${event.terms.fixtureManifestHash}`} target="_blank" rel="noreferrer">Archived simulated evidence</a></p></>}{policy&&<p>Buyer: <code>{policy.buyer}</code></p>}<a href={`${d.explorer}/address/${d.contracts!.manager}`} target="_blank" rel="noreferrer">View deployed contract</a></details></section>}
+  <p className="tiny">Mock assets only. Synthetic weather. A trusted resolver records the result; no real-world insurance or guaranteed returns.</p><details className="panel"><summary>Advanced setup</summary><p><Link href="/underwrite/">Funding and quotes</Link> · <Link href="/operator/">Event setup</Link> · <Link href="/resolution/">Evidence explorer</Link> · <Link href="/policies/">Policies</Link></p></details></div>;
+}
+
+function DemoWalkthrough({policy,quote,event}:{policy?:Protocol['policies'][number];quote?:Protocol['quotes'][number];event?:Protocol['events'][number]}){
+  const [step,setStep]=useState(0),[playing,setPlaying]=useState(false);
+  useEffect(()=>{if(!playing)return;const advance=window.setInterval(()=>setStep(s=>Math.min(s+1,3)),2500);const stop=window.setTimeout(()=>setPlaying(false),10000);return()=>{window.clearInterval(advance);window.clearTimeout(stop);};},[playing]);
+  const premium=policy?.premium??quote?.premium,coverage=policy?.coverage??quote?.coverage;
+  const steps=[{title:'An underwriter backs the cover',text:`The full ${exactMoney(coverage)} mUSDC maximum payout is reserved when the policy is bought.`},{title:'The buyer pays the premium',text:`The buyer pays ${exactMoney(premium)} mUSDC for ${exactMoney(coverage)} mUSDC of conditional cover. The premium is held separately until settlement.`},{title:'The archived fixture determines YES',text:event?`This simulated fixture contains ${millimetres(event.terms.fixtureRainfallMilliMm)} mm, against a ${millimetres(event.terms.thresholdMilliMm)} mm threshold. The resolver commits evidence, then the outcome is finalized.`:'Waiting for the registered fixture.'},{title:'The buyer receives the payout',text:`After a finalized YES, settlement would send ${exactMoney(coverage)} mUSDC to the buyer and release the reserved claim. This preview sends no tokens.`}];
+  return <section className="panel quick-demo-action"><div className="simulation-label">PREVIEW ONLY — NO TRANSACTIONS OR WALLET SIGNATURES</div><div className="quick-demo-steps">{steps.map((item,i)=><button key={item.title} className={step===i?'demo-step current':'demo-step'} onClick={()=>{setPlaying(false);setStep(i);}}><strong>{i+1}</strong><span>{['Collateral','Purchase','Evidence','Payout'][i]}</span></button>)}</div><h2>{steps[step].title}</h2><p>{steps[step].text}</p><div className="stats-row compact"><div className="stat"><span>Premium</span><strong>{exactMoney(premium)} <small>mUSDC</small></strong></div><div className="stat"><span>Conditional YES payout</span><strong>{exactMoney(coverage)} <small>mUSDC</small></strong></div></div><Button disabled={playing||!event||coverage===undefined} onClick={()=>{setStep(0);setPlaying(true);}}>{playing?'Playing the walkthrough…':'Play 10-second demo'}</Button><p className="tiny">Terms and amounts come from the registered demo. This walkthrough illustrates the expected flow; it does not claim settlement. Select Real transactions to see the actual policy status and complete the payout.</p></section>;
+}
